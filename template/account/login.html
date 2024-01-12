@@ -166,13 +166,13 @@ a{color:inherit;text-decoration:none}
 </head>
 <body>
     {% load socialaccount %}
-
+    <form action="" method="post">
+      {% csrf_token %}
+    
     <div class="login-wrap">
       <div class="login-html">
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
-        <form role="form" class="text-start" method="post" >
-          {% csrf_token %}
         <div class="login-form">
           <div class="sign-in-htm">
             <div class="group">
@@ -185,7 +185,7 @@ a{color:inherit;text-decoration:none}
             </div>
 
             <div class="group">
-              <button type="submit"  class="button" > <a href="#" class=""> Login  </a> </button>
+              <button type="submit"  class="button" > Login  </button>
             </div>
             <div class="group">
               <button type="submit"  class="button" > <a href="{% provider_login_url 'google' %}" class="">   Login Google</a> </button>
@@ -194,10 +194,9 @@ a{color:inherit;text-decoration:none}
           </div>
 
         </div>
-        </form>
       </div>
     </div>
-
+  </form>
 </body>
 </html>
 <!-- <a href="{% provider_login_url 'google' %}" class="btn "> <h1>Login Google  </h1></a> -->
