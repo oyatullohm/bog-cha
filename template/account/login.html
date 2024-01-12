@@ -171,15 +171,17 @@ a{color:inherit;text-decoration:none}
       <div class="login-html">
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
+        <form role="form" class="text-start" method="post" >
+          {% csrf_token %}
         <div class="login-form">
           <div class="sign-in-htm">
             <div class="group">
               <label for="user" class="label">Username</label>
-              <input id="user" type="text" class="input" value="None">
+              <input id="user" type="text" class="input" name="login">
             </div>
             <div class="group">
               <label for="pass" class="label">Password</label>
-              <input id="pass" type="password" class="input" value="None" data-type="password">
+              <input id="pass" type="password" class="input" name="password" data-type="password">
             </div>
 
             <div class="group">
@@ -188,10 +190,11 @@ a{color:inherit;text-decoration:none}
             <div class="group">
               <button type="submit"  class="button" > <a href="{% provider_login_url 'google' %}" class="">   Login Google</a> </button>
             </div>
-            
+
           </div>
 
         </div>
+        </form>
       </div>
     </div>
 
