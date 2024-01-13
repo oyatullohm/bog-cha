@@ -64,8 +64,14 @@ class DetailCustomerView(LoginRequiredMixin,View):
 
 class Pay_HistoryView(LoginRequiredMixin,View):
     def get(self,request):
-        payment = Payment.objects.filter(user=request.user.id).order_by('-date')
+        payment = Payment.objects.filter(user=request.user.id).order_by('-id')
         return render(request,'pay-detail.html',{'payment':payment})
 def logout_(request):
     logout(request)
     return redirect('/')
+
+def handler_404(request,exception):
+    return render(request, "404.html")
+
+def handler_500(request):
+    return render(request, "500.html")
