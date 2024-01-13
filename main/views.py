@@ -4,7 +4,6 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Customer , CustomUser , Month , Payment
 from django.contrib import messages
-
 class HomeView(LoginRequiredMixin,View):
     def get(self,request):
         user = request.user
@@ -22,10 +21,11 @@ class CreateCustomerView(LoginRequiredMixin,View):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         total_summa = request.POST.get('total_summa')
-        customer = Customer.objects.create(bogcha=user,name=str(name),phone=str(phone),total_summa=int(total_summa))
+        customer = Customer.objects.create(bogcha=user,name=name,phone=str(phone),total_summa=int(total_summa))
         if customer:
             m =  Month.objects.create(customer=customer)
-            messages.success(request, f"Bola Qo'shildi{m}")
+
+            messages.success(request, f"Bola Qo'shildi")
         return redirect('main:home')
 
 
@@ -37,7 +37,7 @@ class DetailCustomerView(LoginRequiredMixin,View):
 
 
     def post(self,request,pk):
-        name = (request.POST.get('name'))
+        name = request.POST.get('name')
         phone = request.POST.get('phone')
         active = request.POST.get('active')
         total_summa = request.POST.get('vznos')
@@ -47,8 +47,8 @@ class DetailCustomerView(LoginRequiredMixin,View):
         if customer.total_summa != total_summa :
             customer.total_summa = total_summa
             customer.save()
-        if customer.name != str(name):
-            customer.name=str(name)
+        if customer.name != name:
+            customer.name=name
             customer.save()
         if customer.phone != phone:
             customer.phone = phone
