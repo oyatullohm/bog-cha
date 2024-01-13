@@ -24,9 +24,9 @@ class CreateCustomerView(LoginRequiredMixin,View):
         total_summa = request.POST.get('total_summa')
         customer = Customer.objects.create(bogcha=user,name=name,phone=phone,total_summa=total_summa)
         if customer:
-            Month.objects.create(customer=customer)
-            messages.success(request, "Bola Qo'shildi")
-        return redirect('/')
+            m =  Month.objects.create(customer=customer)
+            messages.success(request, f"Bola Qo'shildi{m}")
+        return redirect('main:home')
 
 
 
@@ -40,10 +40,13 @@ class DetailCustomerView(LoginRequiredMixin,View):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         active = request.POST.get('active')
+        total_summa = request.POST.get('vznos')
         payment = int(request.POST.get('payment'))
         customer = Customer.objects.get(id = int(pk))
         month =  customer.customers.all().last()
-
+        if customer.total_summa != total_summa :
+            customer.total_summa = total_summa
+            customer.save()
         if customer.name != name:
             customer.name=name
             customer.save()
