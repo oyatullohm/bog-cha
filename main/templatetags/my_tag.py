@@ -30,3 +30,10 @@ def payment_True_or_False(summa,payment_summa):
         return '🟨'
 
 
+@register.simple_tag
+def total_cost(s):
+    summa = 0
+    for i in s:
+        summa += i.summa
+    return summa
+

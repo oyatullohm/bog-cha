@@ -35,3 +35,16 @@ class Payment(models.Model):
         return f" {self.month.customer.name}"
 
 
+class Month_cost(models.Model):
+    month = models.DateField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.month}"
+
+class Cost(models.Model):
+    customuser = models.ForeignKey(CustomUser , on_delete=models.CASCADE,related_name='costs')
+    month = models.ForeignKey(Month_cost, on_delete=models.CASCADE,related_name='month_costs')
+    summa = models.PositiveIntegerField()
+    text = models.TextField()
+    date = models.DateField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.summa}'

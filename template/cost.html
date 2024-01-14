@@ -1,0 +1,33 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+{% load my_tag %}
+<div class="container text-center"><div class="row"><div class="col"></div>
+<table class="table">
+    <h1>{% total_cost cost %} som </h1>
+     <thead>
+       <tr>
+             <th scope="col">#</th>
+             <th scope="col">Sana</th>
+             <th scope="col">summa</th>
+             <th scope="col">izoh</th>
+
+
+       </tr>
+     </thead>
+     <tbody>
+         {% for c in  cost %}
+       <tr>
+         <th scope="row"> {{forloop.counter}}</th>
+         <td > {{c.date|date:" M d "}} </td>
+         <td>{{c.summa}}</td>
+         <td> {{c.text }}</td>
+       </tr>
+       {% endfor %}
+
+     </tbody>
+   </table>
+
+ </div></div></body>
+
+
+{% endblock content %}

@@ -2,7 +2,7 @@ from django.contrib.auth import logout
 from django.shortcuts import render , redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Customer , CustomUser , Month , Payment
+from .models import *
 from django.contrib import messages
 class HomeView(LoginRequiredMixin,View):
     def get(self,request):
@@ -69,6 +69,28 @@ class Pay_HistoryView(LoginRequiredMixin,View):
     def get(self,request):
         payment = Payment.objects.filter(user=request.user.id).order_by('-id')
         return render(request,'pay-detail.html',{'payment':payment})
+    def post(self,request):
+        summa = request.POST.get('summa')
+        id = request.POST.get('id')
+        payment = Payment.objects.get(id= int(id))
+        payment.summa = int(summa)
+        payment.save()
+        return redirect('main:payment_history')
+    
+class CostView(LoginRequiredMixin,View):
+    def get(self,request):
+        month  = Month_cost.objects.last()
+        cost =  Cost.objects.filter(customuser=request.user,month=month).order_by('-id')
+        return render(request , 'cost.html', {'cost':cost})
+    def post(self,request):
+        summa = request.POST.get('pul')
+        text = request.POST.get('text')
+        month = Month_cost.objects.last()
+        Cost.objects.create(customuser=request.user,month=month,summa=summa,text=text)
+        return redirect('main:home')
+
+
+
 def logout_(request):
     logout(request)
     return redirect('/')
