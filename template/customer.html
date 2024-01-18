@@ -18,9 +18,18 @@
           <label class="form-label" for="form6Example6"><a href="tel:{{customer.phone}}">Phone</a></label>
           <input type="text" id="form6Example6" class="form-control" name="phone" value="{{customer.phone}}" />
         </div>
+        <div data-mdb-input-init class="form-outline mb-4">
+          <label class="form-label" for="form6Example6">Oy</label>
+
+          <select class="form-select" aria-label="Default select example" name="month">
+            {% for i in month %}
+            <option  value="{{i.id}}">  {{ i.month |date:" M Y" }} </option>
+            {% endfor %}
+          </select>
+        </div>
         <!-- Number input -->
         <div data-mdb-input-init class="form-outline mb-4">
-          <label class="form-label" for="form6Example6">To'lov</label>
+          <label class="form-label" for="form6Example6">To'lov  
           <input type="number" id="form6Example6" class="form-control" value="0"  name="payment" />
         </div>
 

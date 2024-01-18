@@ -1,6 +1,6 @@
 from django.views import View
 from django.shortcuts import render , redirect
-from main.models import Customer
+from main.models import CustomUser
 from django.contrib import messages
 class RegisterView(View):
     def post(self,request):
@@ -10,11 +10,12 @@ class RegisterView(View):
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         password = request.POST.get('password')
-        user =  Customer.create_user(username=username,
-                                 last_name=last_name,
-                                 first_name=first_name,
-                                 email=email,phone=phone,
-                                 password=password)
+        user =  CustomUser.objects.create_user(
+                                        username=username,
+                                        first_name=first_name,
+                                        last_name=last_name,
+                                        email=email,phone=phone,
+                                        password=password)
         if user:
             messages.success(request, "siz ro'yhatdan o'ttingiz")
             return redirect('/')

@@ -6,7 +6,8 @@
           <tr>
                 <th scope="col">#</th>
                 <th scope="col">name</th>
-                <th scope="col">Sana</th>
+                <th scope="col">To'langan  Sana</th>
+                <th scope="col">Qasi oyga </th>
                 <th scope="col">summa</th>
                 <th scope="col">Tugma</th>
 
@@ -16,8 +17,9 @@
             {% for c in  payment %}
           <tr>
             <th scope="row"> {{forloop.counter}}</th>
-            <td>{{c}}</td>
-            <td > {{c.date |date:' M d'}} </td>
+            <td> <a href="/customer/{{c.customer.id}}">{{c.customer.name}}</a>  </td>
+            <td > {{c.date |date:' M d'}}  </td>
+            <td > {{c.month.month |date:' M'}}  </td>
             <form action="{% url 'main:payment_history' %}" method="post">
               {% csrf_token %}
               <td> <input  class="form-control" style="width: 90px !important;  " type="text" name="summa" value="{{c.summa }}" id=""></td>

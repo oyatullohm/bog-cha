@@ -20,5 +20,12 @@ urlpatterns += [
         re_path(f'^{settings.STATIC_URL.lstrip("/")}(?P<path>.*)$', mediaserve, {'document_root': settings.STATIC_ROOT}),
     ]
 
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns +=[
+#         path('__debug__/', include(debug_toolbar.urls)),
+#         # ... your other URL patterns ...
+#     ]
+
 handler404=handler_404
 handler500=handler_500

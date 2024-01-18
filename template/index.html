@@ -43,8 +43,8 @@
           <tr>
             <th scope="row"> {{forloop.counter}}</th>
             <td><a href="/customer/{{c.id}}">{{c.name}}</a></td>
-            <td  >{{c.total_summa}}  : {% payment_True_or_False c.total_summa c.customers.all.last.months.all %}  </td>
-            <td> {% payment_summa c.customers.all.last.months.all %} </td>
+            <td  >{{c.total_summa}}  :{% payment_True_or_False c.total_summa  c.summa %}   </td>
+            <td>   {{  c.summa }}  </td> 
             <td>{% if c.active == True %} ✅ {% elif c.active == False %} ❌ {% endif %}</td>
           </tr>
           {% endfor %}
