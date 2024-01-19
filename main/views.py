@@ -5,7 +5,53 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from django.contrib import messages
 import datetime
-class HomeView(LoginRequiredMixin,View):
+from .decoratr import deco_login
+
+'zxcvbnm'
+
+from django.contrib.auth import  login ,logout, authenticate
+class RegisterView(View):
+    def get(self,request):
+        return render(request, 'account/signup.html')
+    def post(self,request):
+        username = request.POST.get('username')
+        phone = request.POST.get('phone')
+        password = request.POST.get('password')
+        user =  CustomUser.objects.create_user(
+                                        username=username,
+                                        phone=phone,
+                                        password=password)
+        if user:
+            messages.success(request, "siz ro'yhatdan o'ttingiz")
+            return redirect('/login/')
+        messages.success(request, "error")
+        return  redirect('main:signup')
+
+class LoginView(View):
+    def get(self,request):
+        if  request.user.is_authenticated == True:
+            return redirect('main:home')
+        return render (request,'account/login.html')
+
+    def post(self,request):
+        if  request.user.is_authenticated == True:
+            return redirect('main:home')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if username and password:
+            # user = authenticate(request,username=username,password=password)
+            try:
+                user = CustomUser.objects.get(username=username)
+                if user is not None:
+                    login(request,user)
+                    return redirect('/')
+            except:
+                messages.error(request, "Login yoki parol xato !")
+                return redirect('/login/')
+
+
+class HomeView(View):
+    @deco_login
     def get(self,request):
         user = request.user
         if user.active == True:
@@ -16,7 +62,8 @@ class HomeView(LoginRequiredMixin,View):
 
 
 
-class CreateCustomerView(LoginRequiredMixin,View):
+class CreateCustomerView(View):
+    @deco_login
     def post(self,request):
         user = request.user
         name = request.POST.get('name')
@@ -29,13 +76,14 @@ class CreateCustomerView(LoginRequiredMixin,View):
 
 
 
-class DetailCustomerView(LoginRequiredMixin,View):
+class DetailCustomerView(View):
+    @deco_login
     def get(self,request,pk):
         customer = Customer.objects.get(id = int(pk))
         month = Month.objects.all().order_by('-id')
         return render (request,'customer.html',{'customer':customer,'month':month})
 
-
+    @deco_login
     def post(self,request,pk):
         month = request.POST.get('month')
         month = Month.objects.get(id=int(month))
@@ -59,10 +107,8 @@ class DetailCustomerView(LoginRequiredMixin,View):
             customer.active = active
         online_date =datetime.date.today()
         online_date = str(online_date)[:7]
-        print(month)
         month_ = str(month)
         month_ = month_[:7]
-        print(type(month_))
         if payment > 0:
             payment =  Payment.objects.create(month=month, customer=customer, summa=payment,user=request.user)
             if online_date == month_:
@@ -71,10 +117,12 @@ class DetailCustomerView(LoginRequiredMixin,View):
         customer.save()
         return redirect(f'/customer/{pk}')
 
-class Pay_HistoryView(LoginRequiredMixin,View):
+class Pay_HistoryView(View):
+    @deco_login
     def get(self,request):
         payment = Payment.objects.filter(user=request.user.id).order_by('-id').select_related('month','customer')
         return render(request,'pay-detail.html',{'payment':payment})
+    @deco_login
     def post(self,request):
         summa = request.POST.get('summa')
         id = request.POST.get('id')
@@ -83,11 +131,13 @@ class Pay_HistoryView(LoginRequiredMixin,View):
         payment.save()
         return redirect('main:payment_history')
 
-class CostView(LoginRequiredMixin,View):
+class CostView(View):
+    @deco_login
     def get(self,request):
         month  = Month.objects.last()
         cost =  Cost.objects.filter(customuser=request.user,month=month).order_by('-id')
         return render(request , 'cost.html', {'cost':cost ,'month':month})
+    @deco_login
     def post(self,request):
         summa = request.POST.get('pul')
         text = request.POST.get('text')

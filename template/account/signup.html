@@ -195,50 +195,32 @@ a.google span{
                     <form action="/accounts/signup" method="post">
                         {% csrf_token %}
                         <div class="field input-field">
-                            <input type="text" placeholder="login" class="input" name="username">
+                            <input type="text" placeholder="login" class="input" required name="username">
                         </div>
                         <div class="field input-field">
-                            <input type="text" placeholder="first_name" class="input" name="first_name">
-                        </div>
-                        <div class="field input-field">
-                            <input type="text" placeholder="last_name" class="input" name="last_name">
-                        </div>
-                        <div class="field input-field">
-                            <input type="email" placeholder="email" class="input" name="email">
-                        </div>
-                        <div class="field input-field">
-                            <input type="text" placeholder="tel" class="input" name="phone">
+                            <input type="text" placeholder="tel" class="input" required name="phone">
                         </div>
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Password" class="password">
+                            <input type="password" placeholder="Password" required class="password">
                             <i class='bx bx-hide eye-icon'></i>
                         </div>
-
-
                         <div class="field button-field">
                             <button>Register</button>
                         </div>
                     </form>
 
                     <div class="form-link">
-                        <span> <a href="{% url 'main:home' %}" class="link signup-link">login</a></span>
+                        <div class="field button-field">
+
+                            <a  href="{% url 'main:home' %}">   login</a >
+                        </div>
+
                     </div>
                 </div>
 
 
-
-
             </div>
-
-            <!-- Signup Form -->
-
-         
-
         </section>
-
-        <!-- JavaScript -->
-       
-   
     </body>
 </html>

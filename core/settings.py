@@ -8,8 +8,7 @@ env = environ.Env()
 env.read_env()
 
 SECRET_KEY = env.str('SECRET_KEY')
-DEBUG = False
-
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 # INTERNAL_IPS = [
 #     # ...
@@ -25,10 +24,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
     'django.contrib.staticfiles',
     'main',
     # 'debug_toolbar',
@@ -42,7 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "allauth.account.middleware.AccountMiddleware",
+    # "allauth.account.middleware.AccountMiddleware",
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
@@ -67,11 +66,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-SOCIALACCOUNT_LOGIN_ON_GET=True
-AUTHENTICATION_BACKENDS = (
-    'allauth.account.auth_backends.AuthenticationBackend',
+# SOCIALACCOUNT_LOGIN_ON_GET=True
+# AUTHENTICATION_BACKENDS = (
+#     'allauth.account.auth_backends.AuthenticationBackend',
 
-)
+# )
+# AUTHENTICATION_BACKENDS =['django.contrib.auth.backends.ModelBackend']
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -123,7 +123,7 @@ STATIC_ROOT = os.path.join(BASE_DIR  / "static")
 # )
 AUTH_USER_MODEL = 'main.CustomUser'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = '/'
 
 
