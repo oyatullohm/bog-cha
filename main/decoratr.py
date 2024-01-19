@@ -4,5 +4,5 @@ def deco_login(fun):
     def wrapper(self,request,*args,**kwargs):
         if request.user.is_authenticated:
             return fun(self, request, *args, **kwargs)
-        return redirect('/login')
+        return redirect('main:login')
     return wrapper
