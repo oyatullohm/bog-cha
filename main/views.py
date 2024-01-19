@@ -7,7 +7,6 @@ from django.contrib import messages
 import datetime
 from .decoratr import deco_login
 
-'zxcvbnm'
 
 from django.contrib.auth import  login ,logout, authenticate
 class RegisterView(View):
@@ -20,7 +19,8 @@ class RegisterView(View):
         user =  CustomUser.objects.create_user(
                                         username=username,
                                         phone=phone,
-                                        password=password)
+                                        password=password,
+                                        )
         if user:
             messages.success(request, "siz ro'yhatdan o'ttingiz")
             return redirect('/login/')

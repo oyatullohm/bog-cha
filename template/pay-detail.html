@@ -9,7 +9,6 @@
                 <th scope="col">To'langan  Sana</th>
                 <th scope="col">Qasi oyga </th>
                 <th scope="col">summa</th>
-                <th scope="col">Tugma</th>
 
           </tr>
         </thead>
@@ -20,11 +19,12 @@
             <td> <a href="/customer/{{c.customer.id}}">{{c.customer.name}}</a>  </td>
             <td > {{c.date |date:' M d'}}  </td>
             <td > {{c.month.month |date:' M'}}  </td>
+            <td > {{c.summa }} </td>
             <form action="{% url 'main:payment_history' %}" method="post">
               {% csrf_token %}
-              <td> <input  class="form-control" style="width: 90px !important;  " type="text" name="summa" value="{{c.summa }}" id=""></td>
-              <input type="text" style="display: none;"  name="id" value="{{c.id}}" id="">
-              <td > <button  type="submit" class="btn btn-success" > O'zgartirish</button></td>
+              <!-- <td> <input  class="form-control" style="width: 90px !important;  " type="text" name="summa" value="{{c.summa }}" id=""></td> -->
+              <!-- <input type="text" style="display: none;"  name="id" value="{{c.id}}" id=""> -->
+              <!-- <td > <button  type="submit" class="btn btn-success" > O'zgartirish</button></td> -->
             </form >
           </tr>
           {% endfor %}
