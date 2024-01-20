@@ -12,4 +12,5 @@ urlpatterns  = [
     path('customer/<int:pk>',DetailCustomerView.as_view(),name='customer'),
     path('payment/history',Pay_HistoryView.as_view(),name='payment_history'),
     path('cost',CostView.as_view(),name='cost'),
+    path('cost-payment',Cost_Payment_Summa.as_view(),name='cost_payment'),
 ]

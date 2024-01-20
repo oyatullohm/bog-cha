@@ -195,7 +195,7 @@ a.google span{
                     <form action="/accounts/signup" method="post">
                         {% csrf_token %}
                         <div class="field input-field">
-                            <input type="text" placeholder="login" class="input" required name="username">
+                            <input type="text" placeholder="username" class="input" required name="username">
                         </div>
                         <div class="field input-field">
                             <input type="text" placeholder="tel" class="input" required name="phone">
@@ -203,7 +203,6 @@ a.google span{
 
                         <div class="field input-field">
                             <input type="password" placeholder="Password" required class="password">
-                            <i class='bx bx-hide eye-icon'></i>
                         </div>
                         <div class="field button-field">
                             <button>Register</button>
@@ -213,7 +212,7 @@ a.google span{
                     <div class="form-link">
                         <div class="field button-field">
 
-                            <a  href="{% url 'main:home' %}">   login</a >
+                            <a  href="{% url 'main:home' %}">  login</a >
                         </div>
 
                     </div>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -187,7 +186,7 @@ a{color:inherit;text-decoration:none}
             </div>
           </form>
           <div class="group">
-            <button type="submit"  class="button" > <a href="/accounts/signup">Register</a> </button>
+            <button type="submit"  class="button" > <a href="{% url 'main:signup' %}">Register</a> </button>
           </div>
 
           </div>

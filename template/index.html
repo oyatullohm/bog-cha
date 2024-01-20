@@ -27,7 +27,7 @@
 
 
   <div class="container text-center"><div class="row"><div class="col"></div>
-    <h2> {{ date|date:" M Y" }}   : {% total_summa_  customer %}   summa   </h2> 
+    <h2> {{ date|date:" M Y" }}  : {% total_summa_  customer %}   summa   </h2> 
    <table class="table">
         <thead>
           <tr>
@@ -40,9 +40,69 @@
         </thead>
         <tbody>
             {% for c in  customer %}
+            <div class="modal fade" id="exampleModal_{{c.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="post" action="/customer/{{c.id}}">
+                      {% csrf_token %}
+                        <!-- Text input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example3"> Name</label>
+                          <input type="text" id="form6Example3" class="form-control" name="name"  value="{{c.name}}"/>
+                        </div>
+
+                        <!-- Number input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6">Vznos</label>
+                          <input type="text" id="form6Example6" class="form-control" name="vznos" value="{{c.total_summa}}" />
+                        </div>
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6"><a href="tel:{{ustomer.phone}}">Phone</a></label>
+                          <input type="text" id="form6Example6" class="form-control" name="phone" value="{{c.phone}}" />
+                        </div>
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6">Oy</label>
+
+                          <select class="form-select" aria-label="Default select example" name="month">
+                            {% for i in month %}
+                            <option  value="{{i.id}}">  {{ i.month |date:" M Y" }} </option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <!-- Number input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6">To'lov  
+                          <input type="number" id="form6Example6" class="form-control" value="0"  name="payment" />
+                        </div>
+                
+                        <!-- Checkbox -->
+                        <div class="form-check d-flex justify-content-center mb-4">
+                          <input
+                            class="form-check-input me-2"
+                            type="checkbox"
+                            id="form6Example8"
+                            {% if c.active == True %} checked  {% endif %}
+                          name="active"  />
+                          <label class="form-check-label" for="form6Example8"> Active </label>
+                        </div>
+                        <div class="form-check d-flex justify-content-center mb-4">
+                          <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-8">ok</button>
+                
+                        </div>
+                        <!-- Submit button -->
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           <tr>
             <th scope="row"> {{forloop.counter}}</th>
-            <td><a href="/customer/{{c.id}}">{{c.name}}</a></td>
+            <td><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{c.id}}" data-bs-whatever="name">{{c.name}}</a></td>
             <td  >{{c.total_summa}}  :{% payment_True_or_False c.total_summa  c.summa %}   </td>
             <td>   {{  c.summa }}  </td> 
             <td>{% if c.active == True %} ✅ {% elif c.active == False %} ❌ {% endif %}</td>

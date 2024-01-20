@@ -56,7 +56,8 @@ class HomeView(View):
         user = request.user
         if user.active == True:
             customer = user.customers.all().order_by('-active')
-            context={'customer':customer}
+            month = Month.objects.all().order_by('-id')
+            context={'customer':customer,'month':month}
             return render(request,'index.html',context)
         return render(request,'payment.html')
 
@@ -77,11 +78,11 @@ class CreateCustomerView(View):
 
 
 class DetailCustomerView(View):
-    @deco_login
-    def get(self,request,pk):
-        customer = Customer.objects.get(id = int(pk))
-        month = Month.objects.all().order_by('-id')
-        return render (request,'customer.html',{'customer':customer,'month':month})
+    # @deco_login
+    # def get(self,request,pk):
+    #     customer = Customer.objects.get(id = int(pk))
+    #     month = Month.objects.all().order_by('-id')
+    #     return render (request,'customer.html',{'customer':customer,'month':month})
 
     @deco_login
     def post(self,request,pk):
@@ -115,7 +116,7 @@ class DetailCustomerView(View):
                 customer.summa += payment.summa
             messages.success(request, "To'lov amalga oshdi ")
         customer.save()
-        return redirect(f'/customer/{pk}')
+        return redirect(f'main:home')
 
 class Pay_HistoryView(View):
     @deco_login
@@ -145,6 +146,22 @@ class CostView(View):
         Cost.objects.create(customuser=request.user,month=month,summa=summa,text=text)
         messages.success(request, "Chiqim  amalga oshdi ")
         return redirect('main:home')
+
+
+class Cost_Payment_Summa(View):
+    @deco_login
+    def get(self,request):
+        user = request.user
+        cost_summa = 0
+        month = Month.objects.all().order_by('-id')
+        cost = Cost.objects.filter(customuser=user,month=month[0])
+        for i in cost:
+            cost_summa += i.summa
+        payment_summa = 0
+        payment = Payment.objects.filter(user=user,month = month[0])
+        for i in payment:
+            payment_summa+= i.summa
+        return render(request,'cost-payment.html',{'cost':cost_summa,'payment':payment_summa})
 
 
 
