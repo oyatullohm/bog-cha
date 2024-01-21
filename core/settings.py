@@ -8,13 +8,13 @@ env = environ.Env()
 env.read_env()
 
 SECRET_KEY = env.str('SECRET_KEY')
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
-INTERNAL_IPS = [
+# INTERNAL_IPS = [
 
-    '127.0.0.1',
+#     '127.0.0.1',
 
-]
+# ]
 
 # Application definition
 SITE_ID = 1

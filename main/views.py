@@ -150,8 +150,11 @@ class Cost_Payment_Summa(View):
         payment  = []
         month = Month.objects.all().order_by('-id').prefetch_related('months','month_costs')
         for i in month:
-            month_costs.append(i.month_costs.filter(customuser = request.user ))
-            payment.append(i.months.filter(user=request.user))
+            month_costs.append(Cost.objects.filter(customuser =  request.user,month= i ))
+            payment.append(Payment.objects.filter(month=i,user=request.user))
+        print(payment)
+        print(month_costs)
+  
         return render(request,'cost-payment.html',{ 'payment':payment, 'month_costs':month_costs })
 
 
