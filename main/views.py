@@ -146,10 +146,13 @@ class CostView(View):
 class Cost_Payment_Summa(View):
     @deco_login
     def get(self,request):
-        user = request.user
+        month_costs = []
+        payment  = []
         month = Month.objects.all().order_by('-id').prefetch_related('months','month_costs')
-
-        return render(request,'cost-payment.html',{ 'month':month })
+        for i in month:
+            month_costs.append(i.month_costs.filter(customuser = request.user ))
+            payment.append(i.months.filter(user=request.user))
+        return render(request,'cost-payment.html',{ 'payment':payment, 'month_costs':month_costs })
 
 
 
