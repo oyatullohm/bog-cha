@@ -22,8 +22,8 @@ class RegisterView(View):
                                         password=password,
                                         )
         if user:
-            messages.success(request, "siz ro'yhatdan o'ttingiz")
-            return redirect('/login/')
+            messages.success(request, " сиз Ру'йхатдан У'ттингиз ")
+            return redirect('main:login')
         messages.success(request, "error")
         return  redirect('main:signup')
 
@@ -46,8 +46,9 @@ class LoginView(View):
                     login(request,user)
                     return redirect('/')
             except:
-                messages.error(request, "Login yoki parol xato !")
-                return redirect('/login/')
+                messages.error(request, " Логин Йоки  Парол Хато !")
+                return redirect('main:login')
+        return redirect('main:login')
 
 
 class HomeView(View):
@@ -72,18 +73,12 @@ class CreateCustomerView(View):
         total_summa = request.POST.get('total_summa')
         customer = Customer.objects.create(bogcha=user,name=name,phone=str(phone),total_summa=int(total_summa))
         if customer:
-            messages.success(request, f"Bola Qo'shildi")
+            messages.success(request, f"Бола К,у'шилди")
         return redirect('main:home')
 
 
 
 class DetailCustomerView(View):
-    # @deco_login
-    # def get(self,request,pk):
-    #     customer = Customer.objects.get(id = int(pk))
-    #     month = Month.objects.all().order_by('-id')
-    #     return render (request,'customer.html',{'customer':customer,'month':month})
-
     @deco_login
     def post(self,request,pk):
         month = request.POST.get('month')
@@ -114,14 +109,14 @@ class DetailCustomerView(View):
             payment =  Payment.objects.create(month=month, customer=customer, summa=payment,user=request.user)
             if online_date == month_:
                 customer.summa += payment.summa
-            messages.success(request, "To'lov amalga oshdi ")
+            messages.success(request, "Ту'лов Амалга ошди ")
         customer.save()
         return redirect(f'main:home')
 
 class Pay_HistoryView(View):
     @deco_login
     def get(self,request):
-        payment = Payment.objects.filter(user=request.user.id).order_by('-id').select_related('month','customer')
+        payment= Payment.objects.filter(user=request.user.id).order_by('-id').select_related('month','customer')
         return render(request,'pay-detail.html',{'payment':payment})
     @deco_login
     def post(self,request):
@@ -144,7 +139,7 @@ class CostView(View):
         text = request.POST.get('text')
         month = Month.objects.last()
         Cost.objects.create(customuser=request.user,month=month,summa=summa,text=text)
-        messages.success(request, "Chiqim  amalga oshdi ")
+        messages.success(request, "Чк,им  Амалга ошди ")
         return redirect('main:home')
 
 
@@ -152,16 +147,9 @@ class Cost_Payment_Summa(View):
     @deco_login
     def get(self,request):
         user = request.user
-        cost_summa = 0
-        month = Month.objects.all().order_by('-id')
-        cost = Cost.objects.filter(customuser=user,month=month[0])
-        for i in cost:
-            cost_summa += i.summa
-        payment_summa = 0
-        payment = Payment.objects.filter(user=user,month = month[0])
-        for i in payment:
-            payment_summa+= i.summa
-        return render(request,'cost-payment.html',{'cost':cost_summa,'payment':payment_summa})
+        month = Month.objects.all().order_by('-id').prefetch_related('months','month_costs')
+
+        return render(request,'cost-payment.html',{ 'month':month })
 
 
 

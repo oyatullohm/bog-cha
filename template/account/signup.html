@@ -183,7 +183,6 @@ a.google span{
     .form{
         padding: 20px 10px;
     }
-    
 }
     </style>
     </head>
@@ -191,28 +190,28 @@ a.google span{
         <section class="container forms">
             <div class="form login">
                 <div class="form-content">
-                    <header>Register</header>
+                    <header> Ру'йхатдан у'тиш  </header>
                     <form action="/accounts/signup" method="post">
                         {% csrf_token %}
                         <div class="field input-field">
-                            <input type="text" placeholder="username" class="input" required name="username">
+                            <input type="text" placeholder="Логин" class="input" required name="username">
                         </div>
                         <div class="field input-field">
-                            <input type="text" placeholder="tel" class="input" required name="phone">
+                            <input type="text" placeholder="Тел" class="input" required name="phone">
                         </div>
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Password" required class="password">
+                            <input type="password" placeholder="Парол" required class="password">
                         </div>
                         <div class="field button-field">
-                            <button>Register</button>
+                            <button>Ру'йхатдан у'тиш </button>
                         </div>
                     </form>
 
                     <div class="form-link">
                         <div class="field button-field">
 
-                            <a  href="{% url 'main:home' %}">  login</a >
+                            <a  href="{% url 'main:home' %}"> Тзимга  Криш</a >
                         </div>
 
                     </div>
