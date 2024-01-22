@@ -14,9 +14,68 @@
         </thead>
         <tbody>
             {% for c in  payment %}
+            <div class="modal fade" id="exampleModal_{{c.customer.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="post" action="/customer/{{c.id}}">
+                      {% csrf_token %}
+                        <!-- Text input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example3"> Исим</label>
+                          <input type="text" id="form6Example3" class="form-control" name="name"  value="{{c.customer.name}}"/>
+                        </div>
+
+                        <!-- Number input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6">Взнос</label>
+                          <input type="text" id="form6Example6" class="form-control" name="vznos" value="{{c.customer.total_summa}}" />
+                        </div>
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6"><a href="tel:{{ustomer.phone}}">Тел</a></label>
+                          <input type="text" id="form6Example6" class="form-control" name="phone" value="{{c.customer.phone}}" />
+                        </div>
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6">Oй</label>
+
+                          <select class="form-select" aria-label="Default select example" name="month">
+                            {% for i in month %}
+                            <option  value="{{i.id}}">  {{ i.month |date:" M Y" }} </option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <!-- Number input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <label class="form-label" for="form6Example6">Ту'лов </label>
+                          <input type="number" id="form6Example6" class="form-control" value="0"  name="payment" />
+                        </div>
+                        <!-- Checkbox -->
+                        <div class="form-check d-flex justify-content-center mb-4">
+                          <input
+                            class="form-check-input me-2"
+                            type="checkbox"
+                            id="form6Example8"
+                            {% if c.customer.active == True %} checked  {% endif %}
+                          name="active"  />
+                          <label class="form-check-label" for="form6Example8"> Активе </label>
+                        </div>
+                        <div class="form-check d-flex justify-content-center mb-4">
+                          <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-8">Оk</button>
+
+                        </div>
+                        <!-- Submit button -->
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           <tr>
             <th scope="row"> {{forloop.counter}}</th>
-            <td> <a href="/customer/{{c.customer.id}}">{{c.customer.name}}</a>  </td>
+            <td>  <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{c.customer.id}}" data-bs-whatever="name">{{c.customer.name}}</a> </td>
             <td > {{c.date |date:' M d'}}  </td>
             <td > {{c.month.month |date:' M'}}  </td>
             <td > {{c.summa }} </td>

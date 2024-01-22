@@ -117,7 +117,8 @@ class Pay_HistoryView(View):
     @deco_login
     def get(self,request):
         payment= Payment.objects.filter(user=request.user.id).order_by('-id').select_related('month','customer')
-        return render(request,'pay-detail.html',{'payment':payment})
+        month = Month.objects.all().order_by('-id')
+        return render(request,'pay-detail.html',{'payment':payment,'month':month})
     @deco_login
     def post(self,request):
         summa = request.POST.get('summa')
