@@ -1,7 +1,6 @@
 from django.contrib.auth import logout
 from django.shortcuts import render , redirect
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from django.contrib import messages
 import datetime
@@ -69,7 +68,9 @@ class CreateCustomerView(View):
     def post(self,request):
         user = request.user
         name = request.POST.get('name')
+        name = name.replace("о","o")
         phone = request.POST.get('phone')
+        phone =  phone.replace("о","o")
         total_summa = request.POST.get('total_summa')
         customer = Customer.objects.create(bogcha=user,name=name,phone=str(phone),total_summa=int(total_summa))
         if customer:
@@ -82,6 +83,7 @@ class DetailCustomerView(View):
         month = request.POST.get('month')
         month = Month.objects.get(id=int(month))
         name = request.POST.get('name')
+        name =  name.replace("о","o")
         phone = request.POST.get('phone')
         active = request.POST.get('active')
         total_summa = request.POST.get('vznos') 
@@ -136,6 +138,7 @@ class CostView(View):
     def post(self,request):
         summa = request.POST.get('pul')
         text = request.POST.get('text')
+        text = text.replace("о","o")
         month = request.POST.get('month')
         month =  Month.objects.get(id=int(month))
         Cost.objects.create(customuser=request.user,month=month,summa=summa,text=text)

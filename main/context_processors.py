@@ -1,5 +1,5 @@
 import datetime
-from .models import Month
+from .models import Month , CustomUser , Customer
 
 def create_month(request):
     user = request.user
@@ -10,10 +10,10 @@ def create_month(request):
         month = str(online_date)[:7]
         if date != month:
             month = Month.objects.create()
-            if month:
-                for i in user.customers.all():
-                    i.summa = 0
-                    i.save()
-            user.date = online_date
-            user.save()
+            for i in CustomUser.objects.all():
+                i.date = online_date
+                i.save()
+            for i in Customer.objects.all():
+                i.summa = 0
+                i.save()
     return {'date':online_date}
