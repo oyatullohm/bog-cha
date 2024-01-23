@@ -8,9 +8,10 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            {% for i in payment %}
-             <div class="alert alert-primary" role="alert">
-                Взнослар 
+            {% for i in month %}
+            <div class="alert alert-primary" role="alert">
+                {{i.month|date:"M Y "}} : Взнослар :
+                 {%  total_payment_summa  request i %}  : Сум
               </div>
 
             {% endfor %}
@@ -18,9 +19,10 @@
         <div class="col-6">
 
 
-              {% for i in month_costs %}
+              {% for i in month %}
               <div class="alert alert-warning" role="alert">
-                  Чк,им лар
+                {{i.month|date:"M Y "}} :  Чк,им лар
+               : {%  total_cost_summa  request i %} : Сум
                </div>
 
 

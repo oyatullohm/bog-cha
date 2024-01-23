@@ -53,6 +53,15 @@
                   <input type="number" class="form-control" id="recipient-name"required name="pul">
                 </div>
                 <div class="mb-3">
+                  <label class="col-form-labell" >Oй</label>
+
+                  <select class="form-select"  name="month">
+                    {% for i in month %}
+                    <option  value="{{i.id}}">  {{ i.month |date:" M Y" }} </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-3">
                   <label for="recipient-name" class="col-form-label" >Изох</label>
                   <input type="text" class="form-control" id="recipient-name" required name="text">
                 </div>
@@ -111,9 +120,9 @@
               <li class="nav-item">
                 <a class="nav-link text-info" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal_chqim" data-bs-whatever="name">Чк,им К,у’шиш</a>
               </li>
-              <!-- <li class="nav-item">
+              <li class="nav-item">
                 <a class="nav-link text-warning-emphasis" href="{% url 'main:cost_payment' %}" >Барча Крим Чк,имлар</a>
-              </li> -->
+              </li>
               <li class="nav-item">
                 <a href="/accounts/logout/"  ><h6 class="text-danger">Чк,иш</h6 ></a> 
               </li>
