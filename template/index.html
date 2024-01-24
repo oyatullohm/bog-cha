@@ -19,6 +19,20 @@
        transform: translateX(-8px);
    }
 }
+.dataTables_length {
+  display:  none !important;
+}
+
+  #myTable_filter input{
+    margin-top: 5px !important;
+    margin-right: 50px;
+    border-radius: 25px !important;
+    background-color: rgb(255, 255, 255);
+  }
+  .dataTables_info{
+    display: none !important;
+  }
+ 
 </style>
 
 
@@ -28,7 +42,7 @@
 
   <div class="container text-center"><div class="row"><div class="col"></div>
     <h2> {{ date|date:" M Y" }}  : {% total_summa_  customer %}  Сумма   </h2> 
-   <table class="table">
+   <table class="table" id="myTable">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -111,4 +125,10 @@
         </tbody>
       </table>
     </div></div></body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    $('#myTable').DataTable();
+
+</script>
     {% endblock content %}
